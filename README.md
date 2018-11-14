@@ -1,5 +1,4 @@
-# topologycontrol
-Topology control of volumetric data
+# Topology control of volumetric data
 James Vanderhyde, PhD Dissertation, Georgia Tech 2007
 
 Three-dimensional scans and other volumetric data sources often result in representations that are more complex topologically than the original model. The extraneous critical points, handles, and components are called topological noise. The key to this thesis is that the global topology of volumetric data sets is determined by local changes at individual points. 
