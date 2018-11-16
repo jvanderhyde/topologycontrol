@@ -10,7 +10,10 @@ VOLUMEOBJ = octree.o $(VOLFILLOBJ)
 VOLUMEOBJ = 
 OPT = $(OPTPS) -O3
 
-all : mc betti onecompt convertt meshviewer removesmallcomps reorient
+all : reversemc mc betti onecompt convertt meshviewer removesmallcomps reorient
+
+reversemc: reversemc.cpp TriangleMesh.o Vector3D.o ../bitc.o
+	$(CC) $(OPT) -o reversemc reversemc.cpp TriangleMesh.o Vector3D.o ../bitc.o
 
 reorient: reorient.cpp TriangleMesh.o Vector3D.o
 	$(CC) $(OPT) -o reorient reorient.cpp TriangleMesh.o Vector3D.o

@@ -15,7 +15,7 @@ int main(int argc, char** argv)
   if (argc<=2)
     {
       cerr << "Usage: " << argv[0] << " <input .t file> <output .pov file>";
-      cerr << " [<camera.dat file>|- [<output .png file>]]\n";
+      cerr << " [<camera.dat file>|- [<output .png file> [<rotation>]]]\n";
       return 1;
     }
 
@@ -31,14 +31,16 @@ int main(int argc, char** argv)
   Matrix rotateMatrix={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1};
   int screenWidth=400,screenHeight=400;
 
-  int colorTrisByLabel=1;
+  int colorTrisByLabel=0;
   
   triFilename=argv[1];
-  if (argc>=3) cameraFilename=argv[3];
+  if (argc>3) cameraFilename=argv[3];
   else cameraFilename=NULL;
   povFilename=argv[2];
-  if (argc>=4) imageFilename=argv[4];
+  if (argc>4) imageFilename=argv[4];
   else imageFilename=NULL;
+  float rotationAngle=0.0;
+  if (argc>5) rotationAngle=atof(argv[5]);
 
   int result;
   TriangleMesh mesh;
@@ -151,7 +153,10 @@ int main(int argc, char** argv)
 	  for (i=0; i<numVerts; i++)
 	    {
 	      v=mesh.getVert(i);
-	      fout << "      <" << -v.n.x << "," << v.n.y << "," << v.n.z << ">" << endl;
+	      if ((v.n.x==v.n.x) && (v.n.y==v.n.y) && (v.n.z==v.n.z))
+	          fout << "      <" << -v.n.x << "," << v.n.y << "," << v.n.z << ">" << endl;
+	      else
+		  fout << "      <" << 0.0 << "," << 0.0 << "," << 0.0 << ">" << endl;
 	    }
 	  fout << "    }" << endl << endl;
 	  
@@ -165,6 +170,7 @@ int main(int argc, char** argv)
 	    }
 	  fout << "    }" << endl << endl;
 	  
+	  m=0;
 	  switch (m)
 	    {
 	    case 0:
@@ -180,20 +186,25 @@ int main(int argc, char** argv)
 	      fout << "  pigment { rgb <0.45,0.9,0.9> }" << endl << endl;
 	      break;
 	    default:
-	      fout << "  pigment { rgb <0.6,0.6,0.6> }" << endl << endl;
+	      fout << "  pigment { rgb <0.7,0.7,0.7> }" << endl << endl;
 	    }
 	  
 	  fout << "  translate <" << -worldCenter.x << "," << -worldCenter.y << "," << -worldCenter.z << ">" << endl;
 
 	  //for nonuniform CT scan resolution
 	  //fout << "  scale <" << 0.625 << "," << 0.625 << "," << 1.0 << ">" << endl; //colon
-	  fout << "  scale <" << 1.0 << "," << 1.0 << "," << 2.0 << ">" << endl; //brain
-
+	  //fout << "  scale <" << 1.0 << "," << 1.0 << "," << 2.0 << ">" << endl; //brain
+	  
 	  fout << "  scale <" << 2.0/worldSize << "," << 2.0/worldSize << "," << 2.0/worldSize << ">" << endl;
 	  fout << "  matrix <" << rotateMatrix[0] << "," << -rotateMatrix[1] << "," << -rotateMatrix[2] << "," << endl;
 	  fout << "          " << -rotateMatrix[4] << "," << rotateMatrix[5] << "," << rotateMatrix[6] << "," << endl;
 	  fout << "          " << -rotateMatrix[8] << "," << rotateMatrix[9] << "," << rotateMatrix[10] << "," << endl;
 	  fout << "          " << -rotateMatrix[12] << "," << rotateMatrix[13] << "," << rotateMatrix[14] << ">" << endl;
+	  
+	  
+	  //rotate for animation
+	  fout << " rotate <0," << rotationAngle << ",0>" << endl;
+
 	  fout << "  translate <" << cameraPos.x << "," << -cameraPos.y << "," << -cameraPos.z << ">" << endl;
 	  fout << "  translate <0,0,-20>" << endl;
 	  fout << "}" << endl << endl;

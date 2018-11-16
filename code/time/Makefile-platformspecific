@@ -1,0 +1,2 @@
+OPTPS = -Wno-deprecated
+GLFLAGS = -framework OpenGL -framework GLUT -framework Foundation

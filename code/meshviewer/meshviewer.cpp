@@ -123,6 +123,10 @@ void construct_triangle_mesh(char* filename)
 	worldMinCorner.z=minz;
 	worldMaxCorner.z=maxz;
 	
+	cout << "x range: " << minx << "," << maxx << "\n";
+	cout << "y range: " << miny << "," << maxy << "\n";
+	cout << "z range: " << minz << "," << maxz << "\n";
+	
 	mesh.calculateNormals();
 	if (computeConnectivityOption)
 	  {
