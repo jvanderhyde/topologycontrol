@@ -14,3 +14,5 @@ Relevant publications:
 1. “Extraction of Topologically Simple Isosurfaces from Volume Datasets,” A. Szymczak and J. Vanderhyde, IEEE Visualization 2003.
 2. “Topological simplification of isosurfaces in volumetric data using octrees,” J. Vanderhyde and A. Szymczak, Graphical Models, 2008.
 3. “Airway segmentation by topology-driven local thresholding,” A. Szymczak and J. Vanderhyde, SPIE Medical Imaging, 2008.
+
+![eight](eight.png) ![eight from inside](eight_in0.png) ![eight from outside](eight_out0.png)
